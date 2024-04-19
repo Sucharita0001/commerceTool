@@ -1,1 +1,8 @@
 #spring.application.name=commerceTool
+parameters:
+  project: ${PROJECT}
+  client_id: ${CLIENT_ID}
+  client_secret: ${CLIENT_SECRET}
+  oauth_url: https://auth.australia-southeast1.gcp.commercetools.com
+  api_url: https://api.australia-southeast1.gcp.commercetools.com
+  scope: manage_cart_discounts:commerce-tool-sample-project-1:the-good-store manage_my_shopping_lists:commerce-tool-sample-project-1:the-good-store manage_project:commerce-tool-sample-project-1 manage_my_profile:commerce-tool-sample-project-1:the-good-store manage_customers:commerce-tool-sample-project-1:the-good-store manage_shopping_lists:commerce-tool-sample-project-1:the-good-store view_api_clients:commerce-tool-sample-project-1 view_audit_log:commerce-tool-sample-project-1 manage_orders:commerce-tool-sample-project-1:the-good-store manage_api_clients:commerce-tool-sample-project-1 manage_my_orders:commerce-tool-sample-project-1:the-good-store
