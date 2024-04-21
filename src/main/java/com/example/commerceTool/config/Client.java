@@ -12,6 +12,7 @@ public class Client {
 
     @Autowired
     private ConfigPropertis configPropertis;
+    
     public ProjectApiRoot createApiClient() {
         final ProjectApiRoot apiRoot = ApiRootBuilder.of()
                 .defaultClient(ClientCredentials.of()

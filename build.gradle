@@ -30,13 +30,6 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	/*implementation 'org.springframework.boot:spring-boot-starter-webflux:3.2.4'
-	implementation 'com.commercetools.sdk:commercetools-http-client:17.7.0'
-	implementation "com.commercetools.sdk:commercetools-sdk-java-api:17.7.0"
-	implementation "com.commercetools.sdk:commercetools-sdk-java-importapi:17.7.0"
-	implementation 'com.commercetools.sdk:commercetools-sdk-java-ml:17.3.0'
-	implementation 'io.projectreactor:reactor-core:3.6.4'
-	implementation 'org.apache.httpcomponents:httpclient:4.5.14'*/
 	implementation "com.commercetools.sdk:commercetools-http-client:${versions.commercetools}"
 	implementation "com.commercetools.sdk:commercetools-sdk-java-api:${versions.commercetools}"
 	implementation "com.commercetools.sdk:commercetools-sdk-java-importapi:${versions.commercetools}"
