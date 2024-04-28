@@ -1,33 +1,29 @@
 package com.example.commerceTool.controller;
 
 import com.commercetools.api.client.ProjectApiRoot;
+import com.commercetools.api.models.customer.Customer;
 import com.commercetools.api.models.customer.CustomerSignInResult;
+import com.commercetools.api.models.customer.CustomerToken;
 import com.commercetools.api.models.product.ProductPagedQueryResponse;
 import com.commercetools.api.models.project.Project;
-import com.example.commerceTool.config.Client;
 import com.example.commerceTool.model.CustomerDTO;
 import com.example.commerceTool.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
-public class Contoller {
+public class Controller {
     @Autowired
-    private Client client;
+    private ProjectApiRoot apiRoot;
     @Autowired
     private CustomerService customerService;
 
     @GetMapping("/getName")
     public String getProjectName() {
-
-        ProjectApiRoot apiRoot = client.createApiClient();
-
         Project myProject = apiRoot
                 .get()
                 .executeBlocking()
@@ -38,14 +34,22 @@ public class Contoller {
 
     @GetMapping("/products")
     public ProductPagedQueryResponse getProduct() {
-        ProjectApiRoot apiRoot = client.createApiClient();
         return apiRoot.products().get()
-                .withQuery(c -> c.version().is(2l))
                 .executeBlocking().getBody();
     }
 
     @PostMapping("/createCustomer")
-    public ResponseEntity<CustomerSignInResult> createCustomer(@RequestBody final CustomerDTO customerDTO){
+    public ResponseEntity<CustomerSignInResult> createCustomer(@RequestBody final CustomerDTO customerDTO) {
         return new ResponseEntity<>(customerService.createCustomer(customerDTO), CREATED);
+    }
+
+    @PostMapping("/createCustomerEmailVerificationToken/{id}")
+    public ResponseEntity<CustomerToken> createCustomerEmailVerificationToken(@PathVariable final String id) {
+        return new ResponseEntity<>(customerService.generateCustomerVerificationToken(id), OK);
+    }
+
+    @PostMapping("/verifyCustomer/{token}")
+    public ResponseEntity<Customer> verifyCustomer(@PathVariable final String token) {
+        return new ResponseEntity<>(customerService.verifyCustomer(token), OK);
     }
 }
