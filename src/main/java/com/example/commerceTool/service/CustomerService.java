@@ -50,5 +50,11 @@ public class CustomerService {
         return apiRoot.customers().emailToken().post(customerCreateEmailToken).executeBlocking().getBody();
     }
 
+    //TODO: Verify customer
+    public Customer verifyCustomer(final String token){
+        CustomerEmailVerify customerEmailVerify=new CustomerEmailVerifyImpl();
+        customerEmailVerify.setTokenValue(token);
+        return apiRoot.customers().emailConfirm().post(customerEmailVerify).executeBlocking().getBody();
+    }
 
 }
