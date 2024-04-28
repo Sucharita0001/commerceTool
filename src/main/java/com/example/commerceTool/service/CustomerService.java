@@ -1,11 +1,9 @@
 package com.example.commerceTool.service;
 
+import com.commercetools.api.client.ProjectApiRoot;
 import com.commercetools.api.models.common.BaseAddress;
 import com.commercetools.api.models.common.BaseAddressImpl;
-import com.commercetools.api.models.customer.CustomerDraft;
-import com.commercetools.api.models.customer.CustomerDraftImpl;
-import com.commercetools.api.models.customer.CustomerSignInResult;
-import com.example.commerceTool.config.Client;
+import com.commercetools.api.models.customer.*;
 import com.example.commerceTool.model.CustomerDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
 
     @Autowired
-    private Client client;
+    private ProjectApiRoot apiRoot;
 
     // TODO: CREATE a customer
     public CustomerSignInResult createCustomer(final CustomerDTO customerDTO){
@@ -41,10 +39,16 @@ public class CustomerService {
         customerDraft.setKey(customerDTO.getKey());
         customerDraft.setAddresses(address);
         log.info("Creating customer {}", customerDraft);
-        return client.createApiClient().customers().post(customerDraft).executeBlocking().getBody();
+        return apiRoot.customers().post(customerDraft).executeBlocking().getBody();
     }
-    //  CREATE a email verification token
-    public void generateCustomerVerificationToken(){
 
+    //  TODO: CREATE a email verification token
+    public CustomerToken generateCustomerVerificationToken(final String cutomerId){
+        CustomerCreateEmailToken customerCreateEmailToken = new CustomerCreateEmailTokenImpl();
+        customerCreateEmailToken.setId(cutomerId);
+        customerCreateEmailToken.setTtlMinutes(60L);
+        return apiRoot.customers().emailToken().post(customerCreateEmailToken).executeBlocking().getBody();
     }
+
+
 }
